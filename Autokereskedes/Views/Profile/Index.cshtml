@@ -1,0 +1,27 @@
+﻿@model Autokereskedes.Models.Profile
+@using Microsoft.AspNetCore.Identity
+@inject UserManager<IdentityUser> UserManager
+
+@{
+    ViewData["Title"] = "Profilom";
+}
+
+<h1 class="mt-5 lead text-primary" style="font-size:2rem;">Profilom</h1>
+
+<p>
+    <img src="@Model.ProfilePictureUrl" class="card-img-top" alt="Profile image" style="min-height:170px;max-height:220px;max-width:220px;min-width:130px;" />
+</p>
+<p>
+    <strong>Név:</strong> @Model.Name
+</p>
+<p>
+    <strong>Telefonszám:</strong> @Model.PhoneNumber
+</p>
+<p>
+    <strong>Cím:</strong> @Model.Address
+</p>
+<p>
+    <strong>Születési dátum:</strong> @Model.BirthDate?.ToShortDateString()
+</p>
+
+<a asp-action="Edit" class="btn btn-primary">Profil Szerkesztése</a>

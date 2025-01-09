@@ -1,0 +1,121 @@
+﻿@model Autokereskedes.Models.Auto
+@using Microsoft.AspNetCore.Identity
+@inject UserManager<IdentityUser> UserManager
+
+@{
+    ViewData["Title"] = "Új autó hozzáadása";
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js"></script>
+    @if (TempData["AlertMessage"] != null)
+    {
+        <div id="alertBox" class="alert alert-success alert-dismissible fade show" role="alert" style="margin-top: 15px;">
+            @TempData["AlertMessage"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    }
+
+    if (!User.Identity.IsAuthenticated)
+    {
+        <div class="alert alert-danger">
+            Be kell jelentkeznie, hogy új hirdetést adjon hozzá.
+        </div>
+    }
+    else
+    {
+        <h1 class="mt-5 mb-3 text-center text-primary">@ViewData["Title"]</h1>
+
+        <form asp-action="Create" method="post" enctype="multipart/form-data" class="createform">
+
+            <div class="form-group">
+                <label for="brand" class="mr-2">Márka:</label>
+                <select id="brand" name="brand" asp-items="ViewBag.Brands" class="form-control-sm">
+                    <option value="">-- Válassz --</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="Model">Model</label>
+                <input type="text" class="form-control-sm" id="Model" name="Model" maxlength="30" required />
+            </div>
+
+            <div class="form-group">
+                <label for="Color">Szín</label>
+                <input type="text" class="form-control-sm" id="Color" name="Color" maxlength="20" />
+            </div>
+
+            <div class="form-group">
+                <label for="Year" class="mr-2">Évjárat:</label>
+                <input type="number" id="Year" name="Year" class="form-control-sm" min="1960" max="2024">
+            </div>
+
+            <div class="form-group">
+                <label for="fuelType" class="mr-2">Üzemanyag típus:</label>
+                <select id="fuelType" name="fuelType" asp-items="ViewBag.FuelTypes" class="form-control-sm">
+                    <option value="">-- Válassz --</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="bodyType" class="mr-2">Kivitel:</label>
+                <select id="bodyType" name="bodyType" asp-items="ViewBag.BodyTypes" class="form-control-sm">
+                    <option value="">-- Válassz --</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="Condition" class="mr-2">Állapot</label>
+                <input type="text" class="form-control-sm" id="Condition" name="Condition" required />
+            </div>
+
+            <div class="form-group">
+                <label for="Extras">Extrák</label>
+                <textarea class="form-control-sm" id="Extras" name="Extras"></textarea>
+            </div>
+            <script> //egyszeru js script, hogy lecsekkoljuk, a beviteli minimum-maximum ertekeket az Ar-hoz
+                function checkMinVal(input)
+                {
+                    const minVal = 50000;
+
+                    if(parseInt(input.value) < minVal)
+                    {
+                        input.value = minVal;
+                    }
+                }
+
+                function checkMaxVal(input)
+                {
+                    const maxVal = 1000000000;
+
+                    if(parseInt(input.value) > maxVal)
+                    {
+                        input.value = maxVal;
+                    }
+                }
+            </script>
+            <div class="form-group">
+                <label for="Price">Ár (Ft):</label>
+                <input type="number" class="form-control-sm" id="Price" name="Price" min="50000" max="1000000000" onblur="checkMinVal(this); checkMaxVal(this)" required />
+            </div>
+
+            <div class="form-group">
+                <label for="Capacity">Hengerűrtartalom</label>
+                <input type="number" class="form-control-sm" id="Capacity" name="Capacity" min="50" max="20000" required />
+            </div>
+
+            <div class="form-group">
+                <label for="Description">Leírás</label>
+                <textarea class="form-control-sm" id="Description" name="Description" maxlength="400" required></textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="ImgUrl">Kép URL</label>
+                <input type="text" class="form-control-sm" id="ImgUrl" name="ImgUrl" required />
+            </div>
+
+            <button type="submit" class="btn btn-primary mt-4 w-25">Mentés</button>
+        </form>
+    }
+}
+
+

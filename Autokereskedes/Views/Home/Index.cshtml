@@ -1,0 +1,81 @@
+﻿@model IEnumerable<Autokereskedes.Models.Auto>
+
+@{
+    ViewData["Title"] = "Főoldal";
+}
+
+<div class="container mt-5">
+    <div id="autoCarousel" class="carousel slide" data-bs-ride="carousel" data-bs-interval="2000">
+        <div class="carousel-inner">
+            @if (Model.Any())
+            {
+                int index = 0;
+                foreach (var auto in Model)
+                {
+                    <div class="carousel-item @(index == 0 ? "active" : "")">
+                        <img src="@auto.ImgUrl" class="d-block w-100" alt="@auto.Brand @auto.Model">
+                        <div class="carousel-caption d-none d-md-block">
+                            <div class="blurred-box text-white p-3 rounded">
+                                <h5>@auto.Brand @auto.Model</h5>
+                                <p>@auto.Year - @auto.Price Ft</p>
+                            </div>
+                        </div>
+                    </div>
+                    index++;
+                }
+            }
+            else
+            {
+                <div class="carousel-item active">
+                    <img src="/images/default-carousel.jpg" class="d-block w-100" alt="Nincs elérhető hirdetés">
+                    <div class="carousel-caption d-none d-md-block">
+                        <h5>Nincs elérhető hirdetés</h5>
+                        <p>Hozzon létre egy új autóhirdetést most!</p>
+                    </div>
+                </div>
+            }
+        </div>
+        <script>
+            document.addEventListener("DOMContentLoaded", function () {
+                var autoCarousel = document.querySelector('#autoCarousel');
+                if (autoCarousel) {
+                    var carousel = new bootstrap.Carousel(autoCarousel, {
+                        interval: 10000,
+                        ride: 'carousel'
+                    });
+                }
+            });
+        </script> <!--carouselhez JS script-->
+
+        <button class="carousel-control-prev" type="button" data-bs-target="#autoCarousel" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Előző</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#autoCarousel" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Következő</span>
+        </button>
+    </div>
+</div>
+
+    <div class="mt-5">
+        <h2>Üdvözöljük az Autókereskedésben!</h2>
+        <p class="lead">
+            Kínálatunkban új és használt autók széles választékát találja, valamint egyszerűen adhat fel saját hirdetéseket is.
+        </p>
+
+        <h3>Szolgáltatásaink</h3>
+        <ul>
+            <li>Autók listázása részletes keresési lehetőségekkel</li>
+            <li>Új autóhirdetés feladása néhány kattintással</li>
+            <li>Kedvencek kezelése: tartsa szem előtt a legjobban tetsző ajánlatokat</li>
+        </ul>
+
+        <h3>Miért válasszon minket?</h3>
+        <p>
+            Autókereskedésünk célja, hogy az autóvásárlás és -eladás folyamata egyszerű és gyors legyen minden ügyfelünk számára.
+        </p>
+        <p>
+            Legyen Ön vásárló vagy eladó, nálunk garantáltan megtalálja, amit keres!
+        </p>
+    </div>

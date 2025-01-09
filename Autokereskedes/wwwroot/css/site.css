@@ -1,0 +1,175 @@
+﻿html {
+  font-size: 14px;
+  font-family:sans-serif;
+}
+
+* {
+    font-family: "Raleway", sans-serif;
+}
+
+footer {
+    padding: 1rem 0;
+    text-align: center;
+    margin-top: auto;
+}
+
+.bigbottommargin {
+    margin-bottom:8rem;
+}
+
+@media (min-width: 768px) {
+  html {
+    font-size: 16px;
+  }
+}
+
+.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
+  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+}
+
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+body {
+    margin-bottom: 60px;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+}
+
+img.auto-image {
+    width: 400px;
+    height: 220px;
+    object-fit: cover;
+}
+
+.blurred-box {
+    background-color: rgba(10, 10, 10, 0.6);
+    backdrop-filter: blur(5px);
+    border-radius: 8px;
+    padding: 15px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+}
+.form-control {
+    margin: 10px;
+    display:grid;
+}
+
+#szuresgomb {
+    width: 320px;
+    height: 50px;
+    font-size:20px;
+    text-align:center;
+    margin: auto;
+    position:relative;
+}
+
+.mr {
+    margin-right:10px;
+}
+
+.bg-blue {
+    background-color: rgba(0, 0, 0, 0.05);
+}
+
+.createform {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 40px;
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-top-left-radius: 40px;
+    border-bottom-right-radius: 40px;
+}
+
+.createform .form-group {
+    margin-bottom: 20px;
+}
+
+.createform input[type="text"],
+.createform input[type="number"],
+.createform select,
+.createform textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 1rem;
+    box-sizing: border-box;
+}
+
+.createform #yearFrom,
+.createform #yearTo {
+    width: 10%;
+}
+
+
+.editform {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 40px;
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-top-left-radius: 40px;
+    border-bottom-right-radius: 40px;
+}
+
+.editform .form-group {
+    margin-bottom: 20px;
+}
+
+.editform input[type="text"],
+.editform input[type="number"],
+.editform select,
+.editform textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 1rem;
+    box-sizing: border-box;
+}
+
+.editform #yearFrom,
+.editform #yearTo {
+    width: 10%;
+}
+/*
+.carousel-caption {
+    background-color: rgba(0, 0, 0, 0.5);
+    padding: 15px;
+    border-radius: 10px;
+}
+
+.carousel-caption h5,
+.carousel-caption p {
+    color: #fff;
+}*/
+
+#autoCarousel {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.5);
+}
+
+#autoCarousel .carousel-item img {
+    height: 600px;
+    object-fit: cover;
+}
+
+.carousel-item {
+    transition-duration: 1s;
+}
+
+.navbar-nav .nav-item {
+    text-align: left;
+}
+
+.navbar-nav .nav-link {
+    display: block;
+}
+
+.text-light {
+    color: black;
+}

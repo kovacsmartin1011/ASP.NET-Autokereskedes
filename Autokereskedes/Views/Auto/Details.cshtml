@@ -1,0 +1,58 @@
+﻿@model Autokereskedes.Models.Auto
+
+@{
+    ViewData["Title"] = $"{Model.Brand} {Model.Model} - Részletek";
+    var sellerProfile = ViewBag.SellerProfile as Autokereskedes.Models.Profile;
+}
+
+<div class="container mt-5">
+    <div class="row">
+        <!-- Autó Adatai -->
+        <div class="col-md-8">
+            <div class="card">
+                <img src="@Model.ImgUrl" class="card-img-top" alt="@Model.Brand @Model.Model" style="max-height: 500px; object-fit: cover;">
+                <div class="card-body">
+                    <h5 class="card-title">@Model.Brand @Model.Model</h5>
+                    <p class="card-text">
+                        <strong>Évjárat:</strong> @Model.Year<br>
+                        <strong>Üzemanyag:</strong> @Model.Fuel_Type<br>
+                        <strong>Kivitel:</strong> @Model.Body_Type<br>
+                        <strong>Hengerűrtartalom:</strong> @Model.Capacity cm³<br>
+                        <strong>Állapot:</strong> @Model.Condition<br>
+                        <strong>Szín:</strong> @Model.Color<br>
+                        <strong>Extrák:</strong> @Model.Extras<br>
+                        <strong>Ár:</strong> @Model.Price Ft<br>
+                        <strong>Leírás:</strong> @Model.Description
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Eladó Profilja -->
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="card-title">Eladó Információk</h5>
+                </div>
+                <div class="card-body">
+                    @if (sellerProfile != null)
+                    {
+                        <p>
+                            <strong>Név:</strong> @sellerProfile.Name<br>
+                            <strong>Telefon:</strong> @sellerProfile.PhoneNumber<br>
+                            <strong>Cím:</strong> @sellerProfile.Address<br>
+                            <strong>Születési dátum:</strong> @sellerProfile.BirthDate?.ToString("yyyy-MM-dd")
+                            <img src="@sellerProfile.ProfilePictureUrl" style="min-height:170px;max-height:220px;max-width:220px;min-width:130px;" />
+                        </p>
+                    }
+                    else
+                    {
+                        <p class="text-danger">Az eladó profilja nem elérhető.</p>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <a asp-action="Index" class="btn btn-primary mt-3">Vissza a listához</a>
+</div>

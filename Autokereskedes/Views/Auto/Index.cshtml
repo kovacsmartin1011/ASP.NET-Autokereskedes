@@ -1,0 +1,139 @@
+﻿@model IEnumerable<Autokereskedes.Models.Auto>
+<!--Ez határozza meg a nézet által elfogadott modell típusát.-->
+@using Microsoft.AspNetCore.Identity
+@inject UserManager<IdentityUser> UserManager
+<!--Identity rendszer: a felhasználókkal kapcsolatos műveletekhez használható-->
+
+@{
+    ViewData["Title"] = "Autók Listázása";
+    <link rel="stylesheet" href="~/css/site.css" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js"></script>
+}
+
+@if (TempData["AlertMessage"] != null)
+{
+    <div id="alertBox" class="alert alert-success alert-dismissible fade show" role="alert" style="margin-top: 15px;">
+        @TempData["AlertMessage"]
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+}
+
+@if (User.IsInRole("Admin")) //ha a user admin, akkor megjelenik a gomb, amivel tudja torolni az osszes autot az adatbazisbol.
+{
+    <form asp-action="DeleteAll" method="post">
+        <button type="submit" class="btn btn-danger mt-3">
+            <i class="fa fa-trash"></i> Összes Hirdetés Törlése
+        </button>
+    </form>
+}
+<h1 class="mt-5 lead text-primary text-center" style="font-size:28px;font-weight:bold;">Autók Listázása</h1>
+
+<form asp-action="Index" method="get" class="form-inline mb-4">
+    <div class="row">
+        <!-- Márka -->
+        <div class="col-md-4 mb-3">
+            <label for="brand" class="form-label">Márka:</label>
+            <select id="brand" name="brand" asp-items="ViewBag.Brands" class="form-select form-control">
+                <option value="">-- Válassz --</option>
+            </select>
+        </div>
+
+        <!-- Évjárat -->
+        <div class="col-md-4 mb-3">
+            <label for="yearFrom" class="form-label">Évjárat:</label>
+            <div class="d-flex">
+                <input type="number" id="yearFrom" name="yearFrom" class="form-control me-2" placeholder="Tól" min="1960" max="2024">
+                <input type="number" id="yearTo" name="yearTo" class="form-control" placeholder="Ig" min="1960" max="2024">
+            </div>
+        </div>
+
+        <!-- Üzemanyag -->
+        <div class="col-md-4 mb-3">
+            <label for="fuelType" class="form-label">Üzemanyag típus:</label>
+            <select id="fuelType" name="fuelType" asp-items="ViewBag.FuelTypes" class="form-select form-control">
+                <option value="">-- Válassz --</option>
+            </select>
+        </div>
+
+        <!-- Hengerűrtartalom -->
+        <div class="col-md-4 mb-3">
+            <label for="capacityFrom" class="form-label">Hengerűrtartalom:</label>
+            <div class="d-flex">
+                <input type="number" id="capacityFrom" name="capacityFrom" class="form-control me-2" placeholder="Tól">
+                <input type="number" id="capacityTo" name="capacityTo" class="form-control" placeholder="Ig">
+            </div>
+        </div>
+
+        <!-- Kivitel -->
+        <div class="col-md-4 mb-3">
+            <label for="bodyType" class="form-label">Kivitel:</label>
+            <select id="bodyType" name="bodyType" asp-items="ViewBag.BodyTypes" class="form-select form-control">
+                <option value="">-- Válassz --</option>
+            </select>
+        </div>
+
+        <!-- Ár -->
+        <div class="col-md-4 mb-3">
+            <label for="priceFrom" class="form-label">Ár (Ft):</label>
+            <div class="d-flex">
+                <input type="number" id="priceFrom" name="priceFrom" class="form-control me-2" placeholder="Tól" min="50000" max="1000000000" onblur="checkMinVal(this); checkMaxVal(this)">
+                <input type="number" id="priceTo" name="priceTo" class="form-control" placeholder="Ig" min="50000" max="1000000000" onblur="checkMinVal(this); checkMaxVal(this)">
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12 text-center">
+            <button type="submit" class="btn btn-primary">Szűrés</button>
+        </div>
+    </div>
+</form>
+
+<div class="row mt-5">
+    @foreach (var auto in Model)
+    {
+        <div class="col-md-4 mb-4">
+            <div class="card h-100 position-relative">
+                @if (User.Identity.IsAuthenticated && auto.UserId != User.Identity.Name)
+                {
+                    <form asp-action="AddToFavourites" asp-controller="Favourite" method="post" class="position-absolute top-0 end-0 m-2">
+                        <input type="hidden" name="autoId" value="@auto.Id" />
+                        <button type="submit" class="btn btn-outline-warning">
+                            <i class="fa fa-star"></i>
+                        </button>
+                    </form>
+                }
+                @if (!string.IsNullOrEmpty(auto.ImgUrl))
+                {
+                    <img src="@auto.ImgUrl" class="card-img-top" alt="Car image" style="min-height:270px;max-height:300px;">
+                }
+                else
+                {
+                    <img src="~/img/logo.png" class="card-img-top" alt="Default car image">
+                }
+                <div class="card-body">
+                    <h5 class="card-title">@auto.Brand @auto.Model</h5>
+                    <p class="card-text">
+                        Évjárat: @auto.Year<br>
+                        Üzemanyag: @auto.Fuel_Type<br>
+                        Hengerűrtartalom: @auto.Capacity cm³<br>
+                        Kivitel: @auto.Body_Type<br>
+                        Ár: @auto.Price Ft
+                    </p>
+
+                    <div class="d-flex justify-content-between align-items-center">
+                        <a asp-action="Details" asp-route-id="@auto.Id" class="btn btn-primary w-50">Részletek</a>
+                    </div>
+
+                   @if (User.Identity.IsAuthenticated && auto.UserId == User.Identity.Name)
+                   {
+                        <a asp-action="Edit" asp-route-id="@auto.Id" class="btn btn-warning btn-block mt-2" style="margin-right:14px;">Szerkesztés</a>
+                        <a asp-action="Delete" asp-route-id="@auto.Id" class="btn btn-danger btn-block mt-2">Törlés</a>
+                   }
+                </div>
+            </div>
+        </div>
+    }
+</div>
